@@ -48,12 +48,20 @@ table {
         font-family:'Roboto', sans-serif;  
     }
     h1 {
-        font-size:30px;
+        font-size:40px;
         font-weight:bold;
         margin-bottom: 5px;
         
     }
     h2, h3 {
-        margin-bottom: 15px;
+        
+        margin-right:5px;
+            
+    }
+    h2 {
+        font-size: 30px;
+    }
+    h3 {
+        font-size:20px;
     }
 `
