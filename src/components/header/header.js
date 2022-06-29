@@ -7,7 +7,6 @@ function Header(props) {
 
     const handleChange = (event) => {
         setInput(() => (event.target.value));
-        console.log(input);
     }
 
     const {getUser} = useGitHub();
@@ -15,6 +14,7 @@ function Header(props) {
     const handleSubmit = () => {
         if(input==='') return
         getUser(input);
+        
     }
 
 

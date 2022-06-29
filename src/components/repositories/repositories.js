@@ -1,35 +1,51 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import * as S from './styled'
+import { useGitHub } from '../../hooks';
+import { Repository } from './repository';
+
 
 export const Repositories = () => {
+    const {gitHubState, getRepos, getStarred} = useGitHub();
+    const [hasUserForSearch, setHasUserForSearch] = useState(false);
+
+    useEffect(() => {
+        if(!!gitHubState.user.login)
+        {
+        getRepos(gitHubState.user.login);
+        getStarred(gitHubState.user.login);
+        setHasUserForSearch(!!gitHubState.repositories && !!gitHubState.starred);
+        }
+
+    }, [gitHubState.user.login]);
+    useEffect(() => {
+        setHasUserForSearch(!!gitHubState.repositories && !!gitHubState.starred);
+    }, [gitHubState.repositories, gitHubState.starred])
   return (
     <div>
         <S.TabsWrapper>
             <S.TabListWrapper>
                 <S.TabWrapper>Repositories</S.TabWrapper>
                 <S.TabWrapper>Starred</S.TabWrapper>
-                <S.TabWrapper>Gists</S.TabWrapper>
             </S.TabListWrapper>
             <S.TabPanelWrapper>
-                <div>
-                    <div>
-                        <h9><a href="#">Repo 1</a></h9>
-                        <p>Descrição</p>
-                        <div>
-                            <p>Public</p>
-                            <p>Linguagem: <span>Javascript</span></p>
-                            <p>Licensa: <span>MIT</span></p>
-                            <p>Forks: <span>19</span></p>
-                        </div>
-                    </div>
-                </div>
+                <S.ReposWrapper>
+                    {hasUserForSearch ? 
+                    gitHubState.repositories.map((repo) => (
+                        <Repository key={repo.id} name ={repo.name} isPrivate={repo.private } language={repo.language} forks_count={repo.forks_count}/>
+
+                    )) : <></>}
+                </S.ReposWrapper>
             </S.TabPanelWrapper>
             <S.TabPanelWrapper>
-                <div>Starreds</div>
+            <S.ReposWrapper>
+                    {hasUserForSearch ? 
+                    gitHubState.starred.map((repo) => (
+                        <Repository key={repo.id} name ={repo.name} isPrivate={repo.private } language={repo.language} forks_count={repo.forks_count}/>
+
+                    )) : <></>}
+                </S.ReposWrapper>
             </S.TabPanelWrapper>
-            <S.TabPanelWrapper>
-                <div>Favorites</div>
-            </S.TabPanelWrapper>
+
         </S.TabsWrapper>
     </div>
   )

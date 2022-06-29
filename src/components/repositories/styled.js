@@ -25,7 +25,7 @@ export const TabPanelWrapper = styled(TabPanel)`
         border-bottom-right-radius:4px;
         border-bottom-left-radius:4px;
     }
-    
+    display:flex;
 `
 export const TabWrapper = styled(Tab)`
     box-sizing:border-box;
@@ -48,5 +48,38 @@ export const TabWrapper = styled(Tab)`
     
 
 `
+export const ReposWrapper = styled.div`
+    display:grid;
+    grid-template-columns:repeat(3, 250px);
+    
+
+`
+
 export const RepoWrapper = styled.div`
+    display:flex;
+    flex-direction:column;
+    font-size:15px;
+
+    border:1px solid #5d5d5d;
+    margin:2px;
+    border-radius:8px;
+    `
+    export const RepoInfo = styled.div`
+    display:flex;
+    flex-direction:column;
+    margin:0;
+    `
+    
+    export const RepoName = styled.div`
+    display:flex;
+    justify-content:space-between;
+    & > p {
+        font-style:italic;
+        font-size:12px;
+        margin-left:4px;
+    }
+    h4 {
+        font-weight:bold;
+        
+    }
 `

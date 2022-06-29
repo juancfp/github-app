@@ -27,7 +27,7 @@ export const GithubProvider = ( {children}) => {
             location:undefined,
             avatar:undefined,
             blog:undefined,
-        }
+        },
     });
     
     // pegar usuário
@@ -56,7 +56,9 @@ export const GithubProvider = ( {children}) => {
                     location:user.data.location,
                     avatar:user.data.avatar_url,
                     blog:user.data.blog
-                }
+                },
+                
+                
             }))
         }).catch((error) => {
             console.log(error);
@@ -71,9 +73,37 @@ export const GithubProvider = ( {children}) => {
         });
     }
 
+    // pegar repositórios
+    const getRepos = (username) => {
+        
+        api.get(`users/${username}/repos`).then(repos => {
+            
+
+            setGithubState(prevState => ({
+                ...prevState,
+                repositories: repos.data,
+            }))
+            //já tem os dados da API
+        });
+    }
+    const getStarred = (username) => {
+        
+        api.get(`users/${username}/starred`).then(repos => {
+            
+
+            setGithubState(prevState => ({
+                ...prevState,
+                starred: repos.data,
+            }))
+            //já tem os dados da API
+        });
+    }
+
     const contextValue = {
         gitHubState,
-        getUser: useCallback((username) => getUser(username), [])
+        getUser: useCallback((username) => getUser(username), []),
+        getRepos: useCallback((username) => getRepos(username), []),
+        getStarred:useCallback((username) => getStarred(username), [])
     }
 
     return (
